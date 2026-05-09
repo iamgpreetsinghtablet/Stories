@@ -3,99 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magical Tales - Children Stories</title>
+    <title>Magic AI Stories | Children's Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: "Comic Sans MS", "Chalkboard SE", cursive; background-color: #e0f7fa; margin: 0; padding: 20px; color: #2c3e50; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        h1 { text-align: center; color: #d81b60; font-size: 3em; text-shadow: 2px 2px #fff; }
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.3s; position: relative; }
-        .card:hover { transform: scale(1.05); }
-        .card img { width: 100%; height: 250px; object-fit: cover; }
-        .card-content { padding: 20px; text-align: center; }
-        .card-title { font-size: 1.5em; margin: 10px 0; color: #1565c0; }
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --white: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--light); 
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        }
+        .header h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
         
-        /* Modal Style */
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); overflow-y: auto; }
-        .modal-content { background-color: white; margin: 5% auto; padding: 40px; border-radius: 30px; max-width: 800px; position: relative; box-shadow: 0 5px 30px rgba(0,0,0,0.3); }
-        .close { position: absolute; right: 30px; top: 20px; font-size: 40px; cursor: pointer; color: #d81b60; }
-        .modal img { width: 100%; border-radius: 20px; margin-bottom: 30px; }
-        .modal-title { color: #d81b60; text-align: center; font-size: 2.5em; margin-bottom: 20px; }
-        .modal-story { font-size: 1.3em; line-height: 1.8; color: #34495e; }
-        .modal-moral { margin-top: 30px; font-weight: bold; font-style: italic; color: #2e7d32; text-align: center; font-size: 1.2em; border-top: 2px dashed #ccc; padding-top: 20px; }
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 60px;
+            padding: 0 20px;
+        }
         
-        footer { text-align: center; margin-top: 60px; color: #78909c; }
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .story-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.2);
+        }
+        
+        .story-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 5px solid var(--secondary);
+        }
+        
+        .story-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .story-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .read-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .read-btn::after {
+            content: '→';
+            margin-left: 8px;
+            transition: margin-left 0.2s;
+        }
+        
+        .story-card:hover .read-btn::after {
+            margin-left: 12px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .container { margin-top: 20px; }
+        }
     </style>
 </head>
 <body>
+    <header class="header">
+        <h1>📚 My Magic Library</h1>
+        <p>Enchanting children's stories created by AI</p>
+    </header>
+
     <div class="container">
-        <h1>✨ Magical Tales ✨</h1>
-        <p style="text-align: center; font-size: 1.2em;">Click on a story to start the adventure!</p>
-        
-        <div class="gallery">
+        <div class="story-grid">
 
-            <div class="card" onclick="openModal(0)">
-                <img src="stories/nutmegs_secret_library.jpg" alt="Nutmeg's Secret Library">
-                <div class="card-content">
-                    <div class="card-title">Nutmeg's Secret Library</div>
-                </div>
-            </div>
-    
-            <div class="card" onclick="openModal(1)">
-                <img src="stories/sparkys_journey_home.jpg" alt="Sparky's Journey Home">
-                <div class="card-content">
-                    <div class="card-title">Sparky's Journey Home</div>
-                </div>
-            </div>
-    
-            <div class="card" onclick="openModal(2)">
-                <img src="stories/sparkys_journey_home_a_tale_of_friendship_and_twinkling_stars.jpg" alt="Sparky's Journey Home: A Tale of Friendship and Twinkling Stars">
-                <div class="card-content">
-                    <div class="card-title">Sparky's Journey Home: A Tale of Friendship and Twinkling Stars</div>
-                </div>
-            </div>
-    
         </div>
     </div>
 
-    <!-- The Modal -->
-    <div id="storyModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <img id="modalImg" src="" alt="">
-            <div id="modalTitle" class="modal-title"></div>
-            <div id="modalStory" class="modal-story"></div>
-            <div id="modalMoral" class="modal-moral"></div>
-        </div>
-    </div>
-
-    <script>
-        const stories = [{"title": "Nutmeg's Secret Library", "moral": "The love of reading and learning can take you on incredible adventures and inspire those around you to do the same.", "story": "<br>In a forest filled with tall trees, a brave little squirrel named Nutmeg loved to explore. One day, while scampering up a giant oak tree, Nutmeg stumbled upon a small door hidden behind a thick branch. The door was slightly ajar, inviting Nutmeg to peek inside. As she pushed the door open, she discovered a cozy room filled with books, soft cushions, and warm lanterns. It was a secret library! Nutmeg's eyes widened with wonder as she scanned the shelves, stacked high with books of all shapes and sizes. She had never seen so many books before. A friendly owl, perched on a nearby stool, greeted Nutmeg. 'Welcome, little squirrel! I'm Professor Hootenanny, the guardian of this library. I've been waiting for you.' Professor Hootenanny explained that the library was a magical place where animals could come to learn, dream, and imagine. Nutmeg spent hours browsing the shelves, discovering books about adventure, friendship, and bravery. As she read, the stories came alive in her mind, and she felt as though she was part of them. As the sun began to set, Nutmeg reluctantly said goodbye to Professor Hootenanny and promised to return the next day. From that day on, Nutmeg visited the secret library every day, devouring books and learning new things. She shared her newfound knowledge with her fellow forest creatures, inspiring them to explore and learn as well. As the seasons passed, the forest became a more wondrous and magical place, thanks to Nutmeg's love of reading and discovery.", "image": "stories/nutmegs_secret_library.jpg"}, {"title": "Sparky's Journey Home", "moral": "Even when we feel lost and alone, friendship and kindness can help us find our way back home and shine brighter than ever before.", "story": "<br>Once upon a time, in a vast galaxy, there was a lonely star named Sparky. Sparky lived among millions of other stars, but it always felt like something was missing. One day, while twinkling in the night sky, Sparky lost its sparkle and began to fall towards the Earth. It felt scared and alone, not knowing what would happen next.<br><br>As Sparky landed in a green meadow, it saw a kind girl named Lily playing with her cat. Lily noticed a glowing light and curiously approached Sparky. To her surprise, she saw a small, shimmering star with big, sad eyes. Sparky explained its situation, and Lily's heart melted. She promised to help Sparky find its way back home.<br><br>Together, they embarked on a journey to discover how to send Sparky back to the sky. They met a wise old owl who told them about a magical spring that could revive Sparky's sparkle. After crossing a babbling brook and walking through a colorful forest, they finally reached the magical spring. Sparky drank from the spring and felt its sparkle return.<br><br>However, Sparky still didn't know how to get back to the sky. Lily had an idea. She remembered a legend about a hill where wishes came true. They climbed the hill, and at the top, they found a beautiful rainbow-colored flower. Sparky made a wish, and to their surprise, a shooting star appeared in the sky. Sparky held onto the star and soared back into the galaxy.<br><br>As Sparky returned home, it realized that it wasn't alone anymore. It had found a friend in Lily, and their adventure had created a special bond between them. Sparky shone brighter than ever before, knowing that it had a friend on Earth who cared about it. From that day on, whenever Lily looked at the stars, she would smile, knowing that Sparky was twinkling just for her.", "image": "stories/sparkys_journey_home.jpg"}, {"title": "Sparky's Journey Home: A Tale of Friendship and Twinkling Stars", "moral": "Even when we're lost or alone, kindness and friendship can help us find our way home.", "story": "<br>Once upon a time, in a vast sky filled with twinkling stars, there was a lonely star named Sparky. Sparky loved watching over the world below, seeing children play and laugh together. But one day, while sparkling extra bright, Sparky lost its balance and fell from the sky. Down, down it went, until it landed with a soft thud in a green meadow on Earth.<br><br>At first, Sparky was scared and alone. It didn't know how to get back home to the sky. Just as it began to lose hope, a kind girl named Lily wandered into the meadow, picking wildflowers for her mom. She spotted Sparky and gasped in wonder. 'A fallen star!' she exclaimed.<br><br>Lily gently picked up Sparky and cradled it in her hands. She asked Sparky what happened, and the little star explained its situation. Lily's heart melted, and she promised to help Sparky find its way home. Together, they set out on an adventure, asking animals and wise old trees for advice.<br><br>As they journeyed, Lily told Sparky all about her own life on Earth. She shared stories of her family, friends, and favorite things. Sparky listened with delight, feeling a deep connection to this kind and gentle girl. In return, Sparky shared tales of the stars and constellations, teaching Lily about the magic of the night sky.<br><br>As the sun began to set, Lily had an idea. She remembered a wise old owl who lived in a nearby hollow tree. The owl, named Professor Hootenanny, was known for his knowledge of the stars. They visited the professor, who examined Sparky and declared, 'This little star needs a special kind of sparkle to return home.' He led them to a hidden clearing, where a group of fireflies danced and twinkled in the fading light.<br><br>The fireflies welcomed Sparky and shared their own sparkle with the little star. As the sparkles combined, Sparky began to glow brighter and brighter. With a final burst of light, Sparky shot back up into the sky, returning to its home among the stars.<br><br>Lily watched, tears of joy in her eyes, as Sparky twinkled goodbye. Though they were apart, their friendship remained strong. Every night, Lily would look up at the sky and wave to Sparky, knowing that their bond would shine bright forever.", "image": "stories/sparkys_journey_home_a_tale_of_friendship_and_twinkling_stars.jpg"}];
-        
-        function openModal(index) {
-            const story = stories[index];
-            document.getElementById("modalImg").src = story.image;
-            document.getElementById("modalTitle").innerText = story.title;
-            document.getElementById("modalStory").innerHTML = story.story;
-            document.getElementById("modalMoral").innerText = "Moral: " + story.moral;
-            document.getElementById("storyModal").style.display = "block";
-            document.body.style.overflow = "hidden"; // Prevent scroll
-        }
-
-        function closeModal() {
-            document.getElementById("storyModal").style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById("storyModal")) {
-                closeModal();
-            }
-        }
-    </script>
-    
     <footer>
-        <p>Generated with 💖 by Gemini CLI & NVIDIA AI</p>
+        <p>&copy; 2026 Magic AI Stories. Created with 🪄 and AI.</p>
     </footer>
 </body>
 </html>
